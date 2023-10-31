@@ -1,20 +1,23 @@
-# Use the official Node.js image as a parent image
-FROM node:14
+FROM amazonlinux:2
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+COPY . /app
+RUN yum update -y && \
+    yum install -y nodejs npm
+EXPOSE 80
+CMD ["node", "app.js"]
+#FROM node:14
 
-# Install application dependencies
-RUN npm install
+#WORKDIR /usr/src/app
 
-# Copy the rest of the application source code
-COPY . .
+#COPY package*.json ./
 
-# Expose a port for the Node.js application
-EXPOSE 3000
+#RUN npm install
 
-# Define how the application is started
-CMD [ "npm", "start" ]
+#COPY . .
+
+#EXPOSE 3000
+
+#CMD [ "npm", "start" ]
+
